@@ -1,66 +1,52 @@
-import axios from "axios";
-import React, { useState } from "react";
-import ErrorMessage from "../../components/ErrorMessage";
-import Loading from "../../components/Loading";
-import MainScreen from "../../components/MainScreen";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import ErrorMessage from '../../components/ErrorMessage';
+import Loading from '../../components/Loading';
+import MainScreen from '../../components/MainScreen';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { useNavigate } from 'react-router-dom';
+import { register } from '../../actions/userActions';
 const RegisterScreen = () => {
-  const [email, setemail] = useState("");
-  const [name, setname] = useState("");
+  const [email, setemail] = useState('');
+  const [name, setname] = useState('');
   const [pic, setpic] = useState(
-    "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F04%2F23%2F22%2F00%2Ftree-736885__480.jpg&imgrefurl=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fnature%2F&tbnid=DH7p1w2o_fIU8M&vet=12ahUKEwi31tHnjo_5AhVI44UKHYCsAJkQMygBegUIARDeAQ..i&docid=Ba_eiczVaD9-zM&w=771&h=480&q=images&ved=2ahUKEwi31tHnjo_5AhVI44UKHYCsAJkQMygBegUIARDeAQ"
+    'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F04%2F23%2F22%2F00%2Ftree-736885__480.jpg&imgrefurl=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fnature%2F&tbnid=DH7p1w2o_fIU8M&vet=12ahUKEwi31tHnjo_5AhVI44UKHYCsAJkQMygBegUIARDeAQ..i&docid=Ba_eiczVaD9-zM&w=771&h=480&q=images&ved=2ahUKEwi31tHnjo_5AhVI44UKHYCsAJkQMygBegUIARDeAQ'
   );
-  const [password, setpassword] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
+  const [password, setpassword] = useState('');
+  const [confirmPassword, setconfirmPassword] = useState('');
   const [message, setmessage] = useState(null);
   const [picMessage, setpicMessage] = useState(null);
-  const [error, seterror] = useState(false);
-  const [loading, setloading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/mynotes');
+    }
+  }, [navigate, userInfo]);
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setmessage("Passwords do not match");
+      setmessage('passwords do not match');
     } else {
-      setmessage("");
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        setloading(true);
-        const { data } = await axios.post(
-          "/api/users",
-          {
-            name,
-            pic,
-            email,
-            password,
-          },
-          config
-        );
-        localStorage.setItem("userInfo", JSON.stringify(data));
-        setloading(false);
-      } catch (error) {
-        seterror(error.response.data.message);
-        setloading(false);
-      }
+      dispatch(register(name, email, password, pic));
     }
-    console.log(email);
   };
   const postDetails = (pics) => {
     if (!pics) {
-      return setpicMessage("Please select an Image");
+      return setpicMessage('Please select an Image');
     }
     setpicMessage(null);
-    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
       const data = new FormData();
-      data.append("file", pics);
-      data.append("upload_preset", "notezipper");
-      data.append("cloud_name", "slydev");
-      fetch("https://api.cloudinary.com/v1_1/slydev/image/upload", {
-        method: "post",
+      data.append('file', pics);
+      data.append('upload_preset', 'notezipper');
+      data.append('cloud_name', 'slydev');
+      fetch('https://api.cloudinary.com/v1_1/slydev/image/upload', {
+        method: 'post',
         body: data,
       })
         .then((res) => res.json())
@@ -69,7 +55,7 @@ const RegisterScreen = () => {
         })
         .catch((err) => console.log(err));
     } else {
-      return setpicMessage("pls select an image");
+      return setpicMessage('pls select an image');
     }
   };
 

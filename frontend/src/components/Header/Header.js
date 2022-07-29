@@ -1,8 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
-import "./Header.css";
-
+import { Link, useNavigate } from 'react-router-dom';
+import './Header.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/userActions';
 const Header = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate('/');
+  };
   return (
     <div className="Navbar">
       <div className="Logo">
@@ -20,14 +28,7 @@ const Header = () => {
       </div>
       <div className="routes">
         <Link to="/mynotes">My Notes</Link>
-        <div
-          onClick={() => {
-            localStorage.removeItem("userInfo");
-            history("/");
-          }}
-        >
-          Logout
-        </div>
+        <button onClick={logoutHandler}>Logout</button>
         <select className="dropdown">
           <option>My Profile</option>
           <option>Logout</option>
