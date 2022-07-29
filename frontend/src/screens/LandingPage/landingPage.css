@@ -1,0 +1,42 @@
+.main {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+.welcome {
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+.content {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+}
+.title {
+  font-size: 70px;
+}
+
+.subtitle {
+  font-size: 17px;
+  padding-top: 10px;
+}
+
+.intro-text {
+  width: 100%;
+  text-align: center;
+}
+.buttonContainer {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+.button-landing {
+  margin: 10px;
+  border: 1px #000 solid;
+  border-radius: 10px;
+  padding: 10px;
+}
+.button-landing:hover {
+  background-color: aqua;
+}

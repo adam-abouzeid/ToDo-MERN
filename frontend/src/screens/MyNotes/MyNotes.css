@@ -1,0 +1,43 @@
+.button {
+  margin-top: 200px;
+}
+hr {
+  margin: 20px;
+}
+.card {
+  margin-top: 20px;
+  border: 1px #000 solid;
+}
+.card-header {
+  align-items: center;
+  padding: 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin: 20px 1 0px;
+}
+span {
+  flex: 1;
+  font-size: 18px;
+}
+.edit-button {
+  border: 1px #000 solid;
+  border-radius: 3px;
+  padding: 5px;
+  margin-right: 10px;
+}
+.delete-button {
+  border: 1px #000 solid;
+  border-radius: 3px;
+  padding: 5px;
+}
+.card-body {
+  border-top: 1px #000 solid;
+}
+.content {
+  text-align: left;
+  padding: 5px;
+  justify-content: start;
+}

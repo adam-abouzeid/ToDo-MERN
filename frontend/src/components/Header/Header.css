@@ -1,0 +1,23 @@
+.Navbar {
+  background-color: aqua;
+  height: 65px;
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  align-items: center;
+  text-align: center;
+  padding: 7px;
+  justify-content: space-between;
+  justify-content: space-around;
+}
+.dropdown {
+  margin-left: 5px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(25, 121, 121);
+}
